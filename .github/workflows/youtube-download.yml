@@ -7,6 +7,7 @@ on:
         description: 'YouTube video URL'
         required: true
         default: 'https://www.youtube.com/watch?v=E5FidlkRnMU'
+
 jobs:
   download-video:
     runs-on: ubuntu-latest
