@@ -6,7 +6,7 @@ on:
       file_url:
         description: 'Direct file URL to download'
         required: true
-        default: 'https://mirrors.dotsrc.org/kiwix/zim/wikipedia/wikipedia_he_all_mini_2024-06.zim'
+        default: 'https://store.steampowered.com/app/2195250/EA_SPORTS_FC_24/'
 
 jobs:
   download-and-upload:
