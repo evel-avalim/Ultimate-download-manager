@@ -6,7 +6,7 @@ on:
       video_url:
         description: 'YouTube video URL'
         required: true
-        default: 'https://www.youtube.com/watch?v=ypfWy3fmud8'
+        default: 'https://www.youtube.com/watch?v=E5FidlkRnMU'
 jobs:
   download-video:
     runs-on: ubuntu-latest
@@ -28,7 +28,7 @@ jobs:
       - name: Download YouTube video
         run: |
           cd downloads
-          yt-dlp --cookies ../youtube_cookies.txt -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4' \
+          yt-dlp -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4' \
                  --merge-output-format mp4 \
                  --output "video" \
                  "${{ github.event.inputs.video_url }}"
