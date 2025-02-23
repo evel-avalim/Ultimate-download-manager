@@ -6,7 +6,7 @@ on:
       file_url:
         description: 'Direct file URL to download'
         required: true
-        default: 'https://pickture.co.il/wp-content/uploads/2023/05/%D7%AA%D7%9E%D7%95%D7%A0%D7%94-%D7%A9%D7%9C-%D7%90%D7%99%D7%A9%D7%94-23-768x768.jpg'
+        default: 'https://download.kiwix.org/zim/wikipedia/wikipedia_en_ray_charles_mini_2024-06.zim'
 
 jobs:
   download-and-upload:
