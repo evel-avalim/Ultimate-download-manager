@@ -14,7 +14,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Download file
-        run: wget -O /tmp/file.ext "YOUR_DOWNLOAD_LINK_HERE"
+        run: wget -O /tmp/file.ext "https://filehippo.com/download-launch/fifa-12/windows/?dt=internalDownload&token=RAvvK7CNFamPi1fsBO1U9FirlBjpIWtX2dL150yTFt0"
 
       - name: Remove file extension
         run: mv /tmp/file.ext /tmp/file
