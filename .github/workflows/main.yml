@@ -6,7 +6,7 @@ on:
       file_url:
         description: 'Direct file URL to download'
         required: true
-        default: 'https://oceansgames.co/after-verification-click-go-to-download/'
+        default: 'https://pin.it/6JVdGtlyM'
 
 jobs:
   download-and-upload:
