@@ -32,7 +32,6 @@ jobs:
           yt-dlp -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4' \
                  --merge-output-format mp4 \
                  --output "video" \
-                 --cookies ../.github/workflows/youtube_cookies.txt \
                  "${{ github.event.inputs.video_url }}"
 
       - name: Track video with Git LFS
