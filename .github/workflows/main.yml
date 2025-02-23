@@ -1,4 +1,4 @@
-name: Download and Upload File
+name: Download and Upload Large File
 
 on:
   push:
@@ -14,18 +14,29 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      - name: Install aria2 for efficient downloading
+        run: sudo apt-get install -y aria2
+
       - name: Download file
-        run: wget -O /tmp/file.ext "https://filehippo.com/download-launch/fifa-12/windows/?dt=internalDownload&token=RAvvK7CNFamPi1fsBO1U9FirlBjpIWtX2dL150yTFt0"
+        run: aria2c -o /tmp/largefile.ext "https://filehippo.com/download-launch/fifa-12/windows/?dt=internalDownload&token=RAvvK7CNFamPi1fsBO1U9FirlBjpIWtX2dL150yTFt0"
+
+      - name: Install Git LFS
+        run: |
+          curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash
+          sudo apt-get install -y git-lfs
+          git lfs install
 
       - name: Remove file extension
-        run: mv /tmp/file.ext /tmp/file
+        run: mv /tmp/largefile.ext /tmp/largefile
 
-      - name: Upload file to repository
+      - name: Upload file to repository using Git LFS
         run: |
           mkdir -p downloads
-          mv /tmp/file downloads/
+          mv /tmp/largefile downloads/
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git add downloads/file
-          git commit -m 'Add downloaded file without extension'
+          git lfs track "downloads/largefile"
+          git add .gitattributes
+          git add downloads/largefile
+          git commit -m 'Add downloaded large file without extension'
           git push
