@@ -6,7 +6,7 @@ on:
       file_url:
         description: 'Direct file URL to download'
         required: true
-        default: 'https://www.google.com/imgres?q=%D7%AA%D7%9E%D7%95%D7%A0%D7%94%20%D7%A9%D7%9C%20%D7%A0%D7%95%D7%A2%D7%94%20%D7%A7%D7%99%D7%A8%D7%9C&imgurl=https%3A%2F%2Fsuperpharmstorage.blob.core.windows.net%2Fhybris%2Fbrands%2Fnoa-kirel%2Fheader-mobile.jpg&imgrefurl=https%3A%2F%2Fshop.super-pharm.co.il%2Fnoa-kirel&docid=TtZGj0lBiSPJOM&tbnid=N9DtZjXfOGTWDM&vet=12ahUKEwiDhb-8zNqLAxVL0gIHHYJvLFYQM3oECH0QAA..i&w=800&h=600&hcb=2&ved=2ahUKEwiDhb-8zNqLAxVL0gIHHYJvLFYQM3oECH0QAA'
+        default: 'https://upload.wikimedia.org/wikipedia/commons/f/fb/%D7%A0%D7%95%D7%A2%D7%94_%D7%A7%D7%99%D7%A8%D7%9C_-_%D7%A6%D7%99%D7%9C%D7%95%D7%9D_%D7%93%D7%A0%D7%99%D7%90%D7%9C_%D7%90%D7%9C%D7%A1%D7%98%D7%A8_%28cropped%29.jpg'
 
 jobs:
   download-and-upload:
