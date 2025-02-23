@@ -23,7 +23,12 @@ jobs:
           if [ ! -f /tmp/largefile.ext ]; then
             echo "Error: File /tmp/largefile.ext not found!"
             exit 1
+          else
+            echo "File downloaded successfully to /tmp/largefile.ext"
           fi
+
+      - name: List files in /tmp to verify download
+        run: ls -la /tmp
 
       - name: Install Git LFS
         run: |
