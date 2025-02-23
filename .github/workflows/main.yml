@@ -6,7 +6,7 @@ on:
       file_url:
         description: 'Direct file URL to download'
         required: true
-        default: 'https://store.steampowered.com/app/2195250/EA_SPORTS_FC_24/'
+        default: 'https://mirrors.dotsrc.org/kiwix/zim/wikipedia/wikipedia_ab_all_maxi_2024-07.zim'
 
 jobs:
   download-and-upload:
