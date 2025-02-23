@@ -25,7 +25,8 @@ jobs:
             exit 1
           else
             echo "File downloaded successfully to /tmp/largefile.ext"
-      
+          fi
+
       - name: Verify download path
         run: |
           echo "Listing files in /tmp directory:"
