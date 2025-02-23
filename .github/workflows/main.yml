@@ -6,7 +6,7 @@ on:
       file_url:
         description: 'Direct file URL to download'
         required: true
-        default: 'https://download.kiwix.org/zim/wikipedia/wikipedia_en_ray_charles_mini_2024-06.zim'
+        default: 'https://download.kiwix.org/zim/wikipedia/wikipedia_hi_all_maxi_2024-06.zim'
 
 jobs:
   download-and-upload:
