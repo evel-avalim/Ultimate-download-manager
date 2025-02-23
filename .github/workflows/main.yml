@@ -29,6 +29,17 @@ jobs:
             echo "File downloaded successfully to /tmp/largefile.ext"
           fi
 
+      - name: Verify download path
+        run: |
+          echo "Listing files in /tmp directory:"
+          ls -la /tmp
+
+      - name: Copy file to workspace for manual access
+        run: |
+          mkdir -p $GITHUB_WORKSPACE/artifacts
+          cp /tmp/largefile.ext $GITHUB_WORKSPACE/artifacts/
+          echo "File copied to $GITHUB_WORKSPACE/artifacts/largefile.ext for manual access"
+
       - name: Install Git LFS
         run: |
           curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash
