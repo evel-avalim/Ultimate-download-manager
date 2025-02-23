@@ -17,6 +17,9 @@ jobs:
       - name: Install aria2 for efficient downloading
         run: sudo apt-get install -y aria2
 
+      - name: List files in /tmp before download
+        run: ls -la /tmp
+
       - name: Download file
         run: |
           aria2c -o /tmp/largefile.ext "https://filehippo.com/download-launch/fifa-12/windows/?dt=internalDownload&token=RAvvK7CNFamPi1fsBO1U9FirlBjpIWtX2dL150yTFt0"
@@ -27,10 +30,8 @@ jobs:
             echo "File downloaded successfully to /tmp/largefile.ext"
           fi
 
-      - name: Verify download path
-        run: |
-          echo "Listing files in /tmp directory:"
-          ls -la /tmp
+      - name: List files in /tmp after download
+        run: ls -la /tmp
 
       - name: Install Git LFS
         run: |
