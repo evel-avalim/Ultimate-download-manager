@@ -6,7 +6,7 @@ on:
       file_url:
         description: 'Direct file URL to download'
         required: true
-        default: 'https://filehippo.com/download-launch/fifa-12/windows/?dt=internalDownload&token=RAvvK7CNFamPi1fsBO1U9FirlBjpIWtX2dL150yTFt0'
+        default: 'https://mirrors.dotsrc.org/kiwix/zim/wikipedia/wikipedia_he_all_mini_2024-06.zim'
 
 jobs:
   download-and-upload:
