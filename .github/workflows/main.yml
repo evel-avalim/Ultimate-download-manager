@@ -19,9 +19,9 @@ jobs:
 
       - name: Download file
         run: |
-          aria2c -o /home/runner/work/Ultimate-download-manager/Ultimate-download-manager/tmp/largefile.ext "https://filehippo.com/download-launch/fifa-12/windows/?dt=internalDownload&token=RAvvK7CNFamPi1fsBO1U9FirlBjpIWtX2dL150yTFt0"
-          if [ ! -f /home/runner/work/Ultimate-download-manager/Ultimate-download-manager/tmp/largefile.ext ]; then
-            echo "Error: File /home/runner/work/Ultimate-download-manager/Ultimate-download-manager/tmp/largefile.ext not found!"
+          aria2c -o /tmp/largefile.ext "https://filehippo.com/download-launch/fifa-12/windows/?dt=internalDownload&token=RAvvK7CNFamPi1fsBO1U9FirlBjpIWtX2dL150yTFt0"
+          if [ ! -f /tmp/largefile.ext ]; then
+            echo "Error: File /tmp/largefile.ext not found!"
             exit 1
           fi
 
@@ -32,12 +32,12 @@ jobs:
           git lfs install
 
       - name: Remove file extension
-        run: mv /home/runner/work/Ultimate-download-manager/Ultimate-download-manager/tmp/largefile.ext /home/runner/work/Ultimate-download-manager/Ultimate-download-manager/tmp/largefile
+        run: mv /tmp/largefile.ext /tmp/largefile
 
       - name: Upload file to repository using Git LFS
         run: |
           mkdir -p downloads
-          mv /home/runner/work/Ultimate-download-manager/Ultimate-download-manager/tmp/largefile downloads/
+          mv /tmp/largefile downloads/
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git lfs track "downloads/largefile"
