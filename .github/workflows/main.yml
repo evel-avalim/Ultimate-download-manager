@@ -1,66 +1,31 @@
-name: Download and Upload Large File
+name: Download and Upload File
 
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:
+    inputs:
+      file_url:
+        description: 'Direct file URL to download'
+        required: true
+        default: 'https://filehippo.com/download-launch/fifa-12/windows/?dt=internalDownload&token=RAvvK7CNFamPi1fsBO1U9FirlBjpIWtX2dL150yTFt0'
 
 jobs:
-  download-upload:
+  download-and-upload:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Install aria2 for efficient downloading
-        run: sudo apt-get install -y aria2
+        uses: actions/checkout@v4
 
       - name: Download file
         run: |
-          aria2c -d /tmp -o largefile.ext "https://filehippo.com/download-launch/fifa-12/windows/?dt=internalDownload&token=RAvvK7CNFamPi1fsBO1U9FirlBjpIWtX2dL150yTFt0"
-          if [ ! -f /tmp/largefile.ext ]; then
-            echo "Error: File /tmp/largefile.ext not found!"
-            exit 1
-          else
-            echo "File downloaded successfully to /tmp/largefile.ext"
-          fi
-
-      - name: Verify download path
-        run: |
-          echo "Listing files in /tmp directory:"
-          ls -la /tmp
-
-      - name: Copy file to artifacts for manual access
-        run: |
-          mkdir -p $GITHUB_WORKSPACE/artifacts
-          cp /tmp/largefile.ext $GITHUB_WORKSPACE/artifacts/
-          echo "File copied to $GITHUB_WORKSPACE/artifacts/largefile.ext for manual access"
-
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: downloaded-file
-          path: $GITHUB_WORKSPACE/artifacts/largefile.ext
-
-      - name: Install Git LFS
-        run: |
-          curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash
-          sudo apt-get install -y git-lfs
-          git lfs install
-
-      - name: Remove file extension
-        run: mv /tmp/largefile.ext /tmp/largefile
-
-      - name: Upload file to repository using Git LFS
-        run: |
+          # Create downloads directory if it doesn't exist
           mkdir -p downloads
-          mv /tmp/largefile downloads/
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git lfs track "downloads/largefile"
-          git add .gitattributes
-          git add downloads/largefile
-          git commit -m 'Add downloaded large file without extension'
+          # Download the file using curl
+          curl -L "${{ github.event.inputs.file_url }}" -o "downloads/downloaded_file"
+        
+      - name: Commit and push file
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add downloads/downloaded_file
+          git commit -m "Add downloaded file"
           git push
