@@ -6,7 +6,7 @@ on:
       video_url:
         description: 'YouTube video URL'
         required: true
-        default: 'https://www.youtube.com/watch?v=E5FidlkRnMU'
+        default: 'https://www.youtube.com/watch?v=i0tFsOAMmBs'
 
 jobs:
   download-video:
@@ -32,6 +32,7 @@ jobs:
           yt-dlp -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4' \
                  --merge-output-format mp4 \
                  --output "video" \
+                 --cookies ../youtube_cookies.txt \
                  "${{ github.event.inputs.video_url }}"
 
       - name: Track video with Git LFS
