@@ -6,7 +6,7 @@ on:
       file_url:
         description: 'Direct file URL to download'
         required: true
-        default: 'https://mirrors.dotsrc.org/kiwix/zim/wikipedia/wikipedia_ab_all_maxi_2024-07.zim'
+        default: 'https://download.kiwix.org/zim/wikipedia/wikipedia_he_all_maxi_2024-05.zim'
 
 jobs:
   download-and-upload:
