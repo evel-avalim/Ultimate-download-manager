@@ -20,8 +20,6 @@ jobs:
       - name: Download file
         run: |
           aria2c -d /tmp -o largefile.ext "https://filehippo.com/download-launch/fifa-12/windows/?dt=internalDownload&token=RAvvK7CNFamPi1fsBO1U9FirlBjpIWtX2dL150yTFt0"
-          echo "Downloaded file:"
-          find /tmp -name "largefile.ext"
           if [ ! -f /tmp/largefile.ext ]; then
             echo "Error: File /tmp/largefile.ext not found!"
             exit 1
@@ -34,11 +32,17 @@ jobs:
           echo "Listing files in /tmp directory:"
           ls -la /tmp
 
-      - name: Copy file to workspace for manual access
+      - name: Copy file to artifacts for manual access
         run: |
           mkdir -p $GITHUB_WORKSPACE/artifacts
           cp /tmp/largefile.ext $GITHUB_WORKSPACE/artifacts/
           echo "File copied to $GITHUB_WORKSPACE/artifacts/largefile.ext for manual access"
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: downloaded-file
+          path: $GITHUB_WORKSPACE/artifacts/largefile.ext
 
       - name: Install Git LFS
         run: |
