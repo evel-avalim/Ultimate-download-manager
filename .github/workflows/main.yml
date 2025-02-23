@@ -25,10 +25,11 @@ jobs:
             exit 1
           else
             echo "File downloaded successfully to /tmp/largefile.ext"
-          fi
-
-      - name: List files in /tmp to verify download
-        run: ls -la /tmp
+      
+      - name: Verify download path
+        run: |
+          echo "Listing files in /tmp directory:"
+          ls -la /tmp
 
       - name: Install Git LFS
         run: |
