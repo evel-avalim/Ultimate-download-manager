@@ -6,7 +6,7 @@ on:
       file_url:
         description: 'Direct file URL to download'
         required: true
-        default: 'https://download.kiwix.org/zim/wikipedia/wikipedia_he_all_maxi_2024-05.zim'
+        default: 'https://www.google.com/imgres?q=%D7%AA%D7%9E%D7%95%D7%A0%D7%94%20%D7%A9%D7%9C%20%D7%A0%D7%95%D7%A2%D7%94%20%D7%A7%D7%99%D7%A8%D7%9C&imgurl=https%3A%2F%2Fsuperpharmstorage.blob.core.windows.net%2Fhybris%2Fbrands%2Fnoa-kirel%2Fheader-mobile.jpg&imgrefurl=https%3A%2F%2Fshop.super-pharm.co.il%2Fnoa-kirel&docid=TtZGj0lBiSPJOM&tbnid=N9DtZjXfOGTWDM&vet=12ahUKEwiDhb-8zNqLAxVL0gIHHYJvLFYQM3oECH0QAA..i&w=800&h=600&hcb=2&ved=2ahUKEwiDhb-8zNqLAxVL0gIHHYJvLFYQM3oECH0QAA'
 
 jobs:
   download-and-upload:
