@@ -1,1 +1,2 @@
 downloads/largefile filter=lfs diff=lfs merge=lfs -text
+downloads/downloaded_file filter=lfs diff=lfs merge=lfs -text
