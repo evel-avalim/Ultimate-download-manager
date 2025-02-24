@@ -6,7 +6,7 @@ on:
       file_url:
         description: 'Direct file URL to download'
         required: true
-        default: 'https://www.mako.co.il/music-news/singles/Article-6c1c648fc8cf551006.htm'
+        default: 'https://soundcloud.com/mosezivi/mp3?in=reut-polachek/sets/lx34bhpypu0y'
 
 jobs:
   download-and-upload:
