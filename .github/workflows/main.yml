@@ -6,7 +6,7 @@ on:
       file_url:
         description: 'Direct file URL to download'
         required: true
-        default: 'https://soundcloud.com/mosezivi/mp3?in=reut-polachek/sets/lx34bhpypu0y'
+        default: 'https://s2.pesk.top/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3NjcyMjU2MDAsInN1YiI6IkZyaXR6IFBvd2VyYm9vayAyMDI1IE11bHRpbGluZ3VhbCBbcGVza3RvcC5jb21dLnJhciIsInNvdXJjZSI6Imh0dHBzOlwvXC9wZXNrdG9wLmNvbVwvIn0.65Solr59jbVlOa3wMKkB5grEOFLGPu7TEgElFiAcrLY'
 
 jobs:
   download-and-upload:
