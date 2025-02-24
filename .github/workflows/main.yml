@@ -6,7 +6,7 @@ on:
       file_url:
         description: 'Direct file URL to download'
         required: true
-        default: 'https://filehippo.com/download-launch/asphalt-8-airborne-windows-10/windows/?dt=landingDownload&token=w0AWfz2RSAopuGWZbcYAcTBWvq4R2bed1NSkwtHzaqI'
+        default: 'https://store.noakirel.com/?srsltid=AfmBOoqRdyxjIUNm67HrDNh-wIF9_beqqYSss2qChkCR-noNtIVSzPPC'
 
 jobs:
   download-and-upload:
