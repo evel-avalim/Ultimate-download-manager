@@ -1,4 +1,4 @@
-name: Download YouTube Video (via Invidious)
+name: Download YouTube Video (via Pytube)
 
 on:
   workflow_dispatch:
@@ -13,60 +13,70 @@ jobs:
       - name: Install Git LFS
         run: git lfs install
 
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
       - name: Install dependencies
         run: |
+          python -m pip install --upgrade pip
+          pip install pytube requests
           sudo apt-get update
-          sudo apt-get install -y curl ffmpeg jq wget
+          sudo apt-get install -y ffmpeg
 
       - name: Create downloads directory
         run: mkdir -p downloads
 
-      - name: Download video
+      - name: Create download script
         run: |
-          # הגדר את מזהה הסרטון
-          VIDEO_ID="i0tFsOAMmBs"
-          OUTPUT_NAME="video"
+          cat > download_video.py << 'EOL'
+          from pytube import YouTube
+          import sys
+          from time import sleep
           
-          # רשימת שרתי Invidious זמינים
-          INVIDIOUS_INSTANCES=(
-            "https://invidious.snopyta.org"
-            "https://yewtu.be"
-            "https://invidious.kavin.rocks"
-            "https://vid.puffyan.us"
-          )
-          
-          download_successful=false
-          
-          for instance in "${INVIDIOUS_INSTANCES[@]}"; do
-            echo "Trying instance: $instance"
-            
-            # קבל מידע על הסרטון מה-API
-            video_info=$(curl -s "$instance/api/v1/videos/$VIDEO_ID")
-            
-            if [ $? -eq 0 ] && [ ! -z "$video_info" ]; then
-              # נסה למצוא את הURL של הסרטון באיכות הטובה ביותר
-              video_url=$(echo "$video_info" | jq -r '.formatStreams[] | select(.container=="mp4") | .url' | head -n 1)
+          def download_video(url, output_path):
+              for attempt in range(3):
+                  try:
+                      print(f"Attempt {attempt + 1} to download video...")
+                      yt = YouTube(
+                          url,
+                          use_oauth=False,
+                          allow_oauth_cache=False
+                      )
+                      
+                      # בחר את האיכות הטובה ביותר בפורמט MP4
+                      video = yt.streams.filter(
+                          progressive=True,
+                          file_extension='mp4'
+                      ).order_by('resolution').desc().first()
+                      
+                      if not video:
+                          print("No suitable video stream found")
+                          continue
+                      
+                      print(f"Downloading: {yt.title}")
+                      video.download(output_path=output_path, filename='video.mp4')
+                      print("Download completed successfully!")
+                      return True
+                      
+                  except Exception as e:
+                      print(f"Error occurred: {str(e)}")
+                      if attempt < 2:
+                          print("Waiting 30 seconds before retry...")
+                          sleep(30)
+                      continue
               
-              if [ ! -z "$video_url" ]; then
-                echo "Found video URL, attempting download..."
-                
-                # נסה להוריד את הסרטון
-                if wget -O "downloads/${OUTPUT_NAME}.mp4" "$video_url"; then
-                  download_successful=true
-                  echo "Download successful!"
-                  break
-                fi
-              fi
-            fi
-            
-            echo "Failed with this instance, trying next..."
-            sleep 5
-          done
+              return False
           
-          if [ "$download_successful" = false ]; then
-            echo "Failed to download video from all instances"
-            exit 1
-          fi
+          if __name__ == "__main__":
+              video_url = "https://www.youtube.com/watch?v=i0tFsOAMmBs"
+              if not download_video(video_url, "downloads"):
+                  sys.exit(1)
+          EOL
+
+      - name: Download video
+        run: python download_video.py
 
       - name: Verify download
         run: |
