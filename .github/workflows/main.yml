@@ -6,7 +6,7 @@ on:
       file_url:
         description: 'Direct file URL to download'
         required: true
-        default: 'https://filehippo.com/download-launch/fifa-15/windows/?dt=affiliateDownload&token=A77Foo6tqbzn3QsGsEXFeqL4Mjd4XxG_OhHx3CfSn1o'
+        default: 'https://filehippo.com/download-launch/asphalt-9-legends/windows/?dt=landingDownload&token=SCOMgt30Xp6FuOFkoxYdHAUIJFNFQIe2yPVJiEFoWVs'
 
 jobs:
   download-and-upload:
