@@ -1,4 +1,4 @@
-name: Download YouTube Video (Alternative Method)
+name: Download YouTube Video (Proxy Method)
 
 on:
   workflow_dispatch:
@@ -21,76 +21,121 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install requests urllib3 beautifulsoup4
+          pip install requests pycryptodomex websockets
           sudo apt-get update
-          sudo apt-get install -y ffmpeg aria2
+          sudo apt-get install -y ffmpeg
 
       - name: Create download script
         run: |
           cat > download_video.py << 'EOL'
           import requests
-          from bs4 import BeautifulSoup
           import json
-          import subprocess
           import time
           import os
+          from base64 import b64encode
+          import random
           
-          def get_video_info(video_id):
-              # נסה מספר שרתים חלופיים
-              servers = [
-                  f"https://api.vevioz.com/@api/json/mp4/{video_id}",
-                  f"https://api.yt-download.org/api/mp4/{video_id}",
-                  f"https://api.loader.to/api/mp4/{video_id}"
-              ]
-              
-              headers = {
-                  'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36',
-                  'Accept': 'application/json',
-                  'Accept-Language': 'en-US,en;q=0.9',
-                  'Referer': 'https://www.youtube.com/'
-              }
-              
-              for server in servers:
-                  try:
-                      response = requests.get(server, headers=headers, timeout=30)
-                      if response.status_code == 200:
-                          data = response.json()
-                          if isinstance(data, dict) and 'url' in data:
-                              return data['url']
-                  except:
-                      continue
-              return None
+          def get_proxy_list():
+              try:
+                  response = requests.get('https://raw.githubusercontent.com/TheSpeedX/PROXY-List/master/http.txt')
+                  if response.status_code == 200:
+                      return [line.strip() for line in response.text.split('\n') if line.strip()]
+              except:
+                  pass
+              return []
           
-          def download_with_aria2(url, output_file):
-              command = [
-                  'aria2c',
-                  '--max-tries=5',
-                  '--retry-wait=10',
-                  '--max-connection-per-server=16',
-                  '--split=16',
-                  '--min-split-size=1M',
-                  '--header=User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-                  '--header=Accept: */*',
-                  '--header=Accept-Language: en-US,en;q=0.9',
-                  '--header=Range: bytes=0-',
-                  f'--out={output_file}',
-                  url
-              ]
-              return subprocess.run(command).returncode == 0
+          def download_with_proxy(video_id, output_path, proxy):
+              try:
+                  # שרתי API חלופיים לניסיון הורדה
+                  api_endpoints = [
+                      f"https://pipedapi.kavin.rocks/streams/{video_id}",
+                      f"https://ytapi.cc/api/json/videos/{video_id}",
+                      f"https://invidio.xamh.de/api/v1/videos/{video_id}"
+                  ]
+                  
+                  headers = {
+                      'User-Agent': f'Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/{random.randint(70, 108)}.0.0.0',
+                      'Accept': 'text/html,application/json,application/xhtml+xml',
+                      'Accept-Language': 'en-US,en;q=0.9',
+                      'Connection': 'keep-alive',
+                      'Upgrade-Insecure-Requests': '1'
+                  }
+                  
+                  proxies = {
+                      'http': f'http://{proxy}',
+                      'https': f'http://{proxy}'
+                  }
+                  
+                  for endpoint in api_endpoints:
+                      try:
+                          response = requests.get(
+                              endpoint,
+                              headers=headers,
+                              proxies=proxies,
+                              timeout=30
+                          )
+                          
+                          if response.status_code == 200:
+                              data = response.json()
+                              
+                              # חיפוש URL להורדה בפורמטים שונים של תגובה
+                              video_url = None
+                              if 'videoStreams' in data:
+                                  streams = data['videoStreams']
+                                  for stream in streams:
+                                      if 'url' in stream and stream.get('format', '').lower() == 'mp4':
+                                          video_url = stream['url']
+                                          break
+                              elif 'formats' in data:
+                                  formats = data['formats']
+                                  for fmt in formats:
+                                      if fmt.get('ext', '') == 'mp4':
+                                          video_url = fmt.get('url')
+                                          break
+                              
+                              if video_url:
+                                  print(f"Found video URL, attempting download...")
+                                  download_response = requests.get(
+                                      video_url,
+                                      headers=headers,
+                                      proxies=proxies,
+                                      stream=True,
+                                      timeout=300
+                                  )
+                                  
+                                  if download_response.status_code == 200:
+                                      output_file = os.path.join(output_path, 'video.mp4')
+                                      with open(output_file, 'wb') as f:
+                                          for chunk in download_response.iter_content(chunk_size=8192):
+                                              if chunk:
+                                                  f.write(chunk)
+                                      return True
+                      except:
+                          continue
+              except:
+                  pass
+              return False
           
           def main():
-              video_id = "i0tFsOAMmBs"  # החלף למזהה הסרטון שלך
-              output_file = "downloads/video.mp4"
+              video_id = "i0tFsOAMmBs"  # שנה למזהה הסרטון הרצוי
+              output_path = "downloads"
+              os.makedirs(output_path, exist_ok=True)
+              
+              proxies = get_proxy_list()
+              if not proxies:
+                  print("No proxies available")
+                  return False
               
               for attempt in range(3):
-                  print(f"Attempt {attempt + 1} to get video info...")
+                  print(f"Attempt {attempt + 1} to download video...")
                   
-                  video_url = get_video_info(video_id)
-                  if video_url:
-                      print("Got video URL, starting download...")
-                      if download_with_aria2(video_url, output_file):
-                          print("Download completed successfully!")
-                          return True
+                  # בחירת פרוקסי אקראי
+                  proxy = random.choice(proxies)
+                  print(f"Using proxy: {proxy}")
+                  
+                  if download_with_proxy(video_id, output_path, proxy):
+                      print("Download completed successfully!")
+                      return True
                   
                   if attempt < 2:
                       print("Waiting 30 seconds before retry...")
@@ -99,7 +144,6 @@ jobs:
               return False
           
           if __name__ == "__main__":
-              os.makedirs("downloads", exist_ok=True)
               if not main():
                   exit(1)
           EOL
