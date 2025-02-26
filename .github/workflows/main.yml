@@ -6,8 +6,7 @@ on:
       file_url:
         description: 'Direct file URL to download'
         required: true
-        default: 'https://ravit-asaf.co.il/fashion_new/%D7%97%D7%95%D7%92%D7%92%D7%99%D7%9D-70-%D7%A9%D7%A0%D7%94-%D7%9C%D7%AA%D7%97%D7%A8%D7%95%D7%AA-%D7%9E%D7%9C%D7%9B%D7%AA-%D7%94%D7%99%D7%95%D7%A4%D7%99-%D7%A9%D7%9C-%D7%99%D7%A9%D7%A8%D7%90%D7%9C/'
-
+        default: 'https://prod.downloadnow.com/9d6/f04/5a0d1ed20fd187e51f639070e81c85b717/Warcraft-III-Setup-1-31-Windows.zip?Expires=1740600757&Signature=a2cabd27ca3f733fd7c9ace9659bc81af4802c94&url=https://download.cnet.com/warcraft-iii-the-frozen-throne/3000-windows-warcraft-3-the-frozen-throne.html&Filename=Warcraft-III-Setup-1-31-Windows.zip'
 jobs:
   download-and-upload:
     runs-on: ubuntu-latest
