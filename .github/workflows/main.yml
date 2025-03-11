@@ -6,7 +6,7 @@ on:
       file_url:
         description: 'Direct file URL to download'
         required: true
-        default: 'https://prod.downloadnow.com/9d6/f04/5a0d1ed20fd187e51f639070e81c85b717/Warcraft-III-Setup-1-31-Windows.zip?Expires=1740600757&Signature=a2cabd27ca3f733fd7c9ace9659bc81af4802c94&url=https://download.cnet.com/warcraft-iii-the-frozen-throne/3000-windows-warcraft-3-the-frozen-throne.html&Filename=Warcraft-III-Setup-1-31-Windows.zip'
+        default: 'https://sdownload3p.xyz/AllPCWorld.com/DtSearch-Desktop-2024.02.8821.rar'
 jobs:
   download-and-upload:
     runs-on: ubuntu-latest
