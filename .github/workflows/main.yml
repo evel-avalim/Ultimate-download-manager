@@ -6,7 +6,7 @@ on:
       file_url:
         description: 'Direct file URL to download'
         required: true
-        default: 'https://www.ynet.co.il/articles/0,7340,L-3396777,00.html'
+        default: 'https://www.google.com/imgres?imgurl=https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fhe%2Ff%2Ff4%2F%25D7%259E%25D7%259C%25D7%259B%25D7%25AA_%25D7%2594%25D7%2599%25D7%2595%25D7%25A4%25D7%2599_%25D7%25A9%25D7%259C_%25D7%2599%25D7%25A8%25D7%2595%25D7%25A9%25D7%259C%25D7%2599%25D7%259D_%25D7%259B%25D7%25A8%25D7%2599%25D7%259B%25D7%25AA_%25D7%2594%25D7%25A1%25D7%25A4%25D7%25A8.jpeg&tbnid=sEbiF2raAhs7kM&vet=1&imgrefurl=https%3A%2F%2Fhe.wikipedia.org%2Fwiki%2F%25D7%259E%25D7%259C%25D7%259B%25D7%25AA_%25D7%2594%25D7%2599%25D7%2595%25D7%25A4%25D7%2599_%25D7%25A9%25D7%259C_%25D7%2599%25D7%25A8%25D7%2595%25D7%25A9%25D7%259C%25D7%2599%25D7%259D_(%25D7%25A1%25D7%25A4%25D7%25A8)&docid=gIDwOJbYe5Wc9M&w=600&h=934&source=sh%2Fx%2Fim%2Fm1%2F1&kgs=e6fe00657f52d7cb'
 jobs:
   download-and-upload:
     runs-on: ubuntu-latest
