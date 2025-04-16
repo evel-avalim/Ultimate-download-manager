@@ -1,18 +1,18 @@
-name: Auto Download Manager
+name: Download Wikipedia ZIM
 
 on:
   workflow_dispatch:
 
 jobs:
-  build:
+  download:
     runs-on: ubuntu-latest
     steps:
-      - name: Download ZIP from GitHub
+      - name: Download .zim file from Kiwix
         run: |
-          curl -L https://github.com/AIDARTYQO/Ultimate-download-manager/archive/refs/heads/main.zip -o download.zip
+          curl -L https://download.kiwix.org/zim/wikipedia/wikipedia_he_all_maxi_2024-06.zim -o wikipedia_he.zim
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
-          name: downloaded-zip
-          path: download.zip
+          name: wikipedia_he_zim
+          path: wikipedia_he.zim
