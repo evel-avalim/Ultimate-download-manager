@@ -9,7 +9,7 @@ jobs:
     steps:
       - name: Download .zim file from Kiwix
         run: |
-          curl -L https://download.kiwix.org/zim/wikipedia/wikipedia_he_all_maxi_2024-06.zim -o wikipedia_he.zim
+          curl -L https://download.kiwix.org/zim/wikipedia/wikipedia_he_all_nopic_2024-06.zim -o wikipedia_he.zim
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
